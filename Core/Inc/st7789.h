@@ -81,8 +81,8 @@ extern SPI_HandleTypeDef ST7789_SPI_PORT;
 
 #ifdef USING_240X240
 
-    #define ST7789_WIDTH 320
-    #define ST7789_HEIGHT 240
+    #define ST7789_WIDTH 240
+    #define ST7789_HEIGHT 320
 
 		#if ST7789_ROTATION == 0
 			#define X_SHIFT 0
