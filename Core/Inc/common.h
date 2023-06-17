@@ -30,6 +30,7 @@ extern system_state_t sys_state;
 extern bool detect_state_change;
 extern bool is_list_file_display;
 extern uint8_t index_file_to_read;
+extern uint8_t num_max_of_file;
 /* Public function prototypes ----------------------------------------- */
 void system_init(void);
 void system_proccess(void);

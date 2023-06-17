@@ -280,7 +280,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
   case JOY_A_Pin:
   {
-    // bsp_display_text_line("JOY A", 1);
     detect_state_change = true;
     if(sys_state == STATE_DISPLAY_FILE)
     {
@@ -291,40 +290,39 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   case JOY_B_Pin:
   {
-    // bsp_display_text_line("JOY B", 2);
-    if(index_file_to_read != 2)
+    if (sys_state == STATE_MENU)
     {
-      index_file_to_read++;
+      if (index_file_to_read != num_max_of_file)
+      {
+        index_file_to_read++;
+      }
+      bsp_display_index_choose_file();
     }
-    char buffer[100];
-    sprintf(buffer, "%d", index_file_to_read);
-    bsp_display_text_line("INDEX FILE: ", 20);
-    bsp_display_text_line(buffer, 21);
     break;
   }
   case JOY_C_Pin:
   {
-    // bsp_display_text_line("JOY C", 3);
-    if(index_file_to_read != 1)
+    if (sys_state == STATE_MENU)
     {
-      index_file_to_read--;
+      if (index_file_to_read != 1)
+      {
+        index_file_to_read--;
+      }
+      bsp_display_index_choose_file();
     }
-    char buffer[100];
-    sprintf(buffer, "%d", index_file_to_read);
-    bsp_display_text_line("INDEX FILE: ", 20);
-    bsp_display_text_line(buffer, 21);
     break;
   }
   case JOY_D_Pin:
   {
-    // bsp_display_text_line("JOY D", 4);
     break;
   }
   case JOY_CTR_Pin:
   {
-    // bsp_display_text_line("JOY CTR", 5);
-    detect_state_change = true;
-    sys_state = STATE_DISPLAY_FILE;
+    if(sys_state != STATE_DISPLAY_FILE)
+    {
+      detect_state_change = true;
+      sys_state = STATE_DISPLAY_FILE;
+    }
     break;
   }
   default: break;

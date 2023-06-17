@@ -9,6 +9,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "bsp_display.h"
+#include "common.h"
 
 /* Private defines ---------------------------------------------------- */
 /* Private enumerate/structure ---------------------------------------- */
@@ -56,6 +57,13 @@ void bsp_display_list_file(manage_file_t list_file[])
       break;
     }
   }
+}
+
+void bsp_display_index_choose_file(void)
+{
+  char buffer[100];
+  sprintf(buffer, "%d", index_file_to_read);
+  bsp_display_text_line(buffer, 21);
 }
 
 /* End of file -------------------------------------------------------- */

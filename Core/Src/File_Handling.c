@@ -8,8 +8,7 @@
 #include "stm32f4xx_hal.h"
 
 #include <File_Handling.h>
-#include "bsp_display.h"
-#include "bsp_sd_card.h"
+#include "common.h"
 
 /* =============================>>>>>>>> NO CHANGES AFTER THIS LINE
  * =====================================>>>>>>> */
@@ -81,6 +80,7 @@ FRESULT Scan_SD(char *pat)
       }
       else
       { /* It is a file. */
+        num_max_of_file = index + 1;
         list_file[index].id   = index + 1;
         memcpy(list_file[index].name, fno.fname, sizeof(fno.fname));
         index++;

@@ -18,6 +18,7 @@ system_state_t sys_state;
 bool detect_state_change;
 bool is_list_file_display;
 uint8_t index_file_to_read;
+uint8_t num_max_of_file;
 /* Private variables -------------------------------------------------- */
 /* Private function prototypes ---------------------------------------- */
 /* Function definitions ----------------------------------------------- */
@@ -28,9 +29,10 @@ void system_init(void)
 
   bsp_sd_card_mount();
   bsp_sd_card_scan_file();
+  bsp_display_list_file(list_file);
+
   detect_state_change = true;
   sys_state = STATE_MENU;
-  bsp_display_list_file(list_file);
   is_list_file_display = true;
   index_file_to_read = 1;
 }
@@ -45,6 +47,8 @@ void system_proccess(void)
       {
         ST7789_Fill_Color(WHITE);
         bsp_display_list_file(list_file);
+        bsp_display_text_line("INDEX FILE: ", 20);
+        bsp_display_index_choose_file();
         break;
       }
       case STATE_DISPLAY_FILE:
