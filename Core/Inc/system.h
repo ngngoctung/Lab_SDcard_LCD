@@ -42,6 +42,7 @@ void system_init(void);
  */
 void system_process(void);
 
+void system_reset(void);
 #endif // __SYSTEM_H
 
 /* End of file -------------------------------------------------------- */

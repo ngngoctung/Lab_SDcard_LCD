@@ -314,6 +314,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   case JOY_D_Pin:
   {
+    system_reset();
     break;
   }
   case JOY_CTR_Pin:

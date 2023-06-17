@@ -81,4 +81,10 @@ void system_proccess(void)
       detect_state_change = false;
     }
 }
+
+void system_reset(void)
+{
+  bsp_sd_card_unmount();
+  NVIC_SystemReset();
+}
 /* End of file -------------------------------------------------------- */
