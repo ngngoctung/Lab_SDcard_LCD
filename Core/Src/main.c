@@ -22,8 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "st7789.h"
-#include  "File_Handling.h"
+#include "File_Handling.h"
+#include "bsp_display.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,8 +47,8 @@ SD_HandleTypeDef hsd;
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
-char buffer[100];
-char buff_read[100];
+char buffer[1000];
+char buff_read[1000];
 int indx = 0;
 /* USER CODE END PV */
 
@@ -63,35 +63,7 @@ static void MX_SDIO_SD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void removeNewlines(char arr[], int n)
-{
-  int j = 0;
 
-  for (int i = 0; i < n; i++)
-  {
-    if (arr[i] == '\n')
-    {
-      arr[i] = ' ';
-    }
-  }
-}
-
-void displayStrings(const char *str) {
-    uint16_t x = 10;  // Vị trí cột
-    uint16_t y = 10;  // Vị trí hàng ban đầu
-    int row = 1;  // Số hàng hiện tại
-
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '\n') {
-            row++;
-            y += 10;  // Tăng vị trí hàng lên 10
-            x = 10;  // Đặt vị trí cột về 0
-        } else {
-            ST7789_WriteChar(x, y, str[i], Font_7x10, BLACK, WHITE);
-            x += 7;  // Tăng vị trí cột lên 10
-        }
-    }
-}
 /* USER CODE END 0 */
 
 /**
@@ -148,7 +120,7 @@ int main(void)
  
   // ST7789_WriteString(10, 10, buff_read, Font_7x10, BLACK, WHITE);
   // ST7789_WriteString(10, 20, buff_read, Font_7x10, BLACK, WHITE);
-  displayStrings(buff_read);
+  display_text(buff_read);
   // ST7789_Test();
 //  ST7789_DrawPixel(1, 1, RED);
 
