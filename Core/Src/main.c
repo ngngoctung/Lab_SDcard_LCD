@@ -48,7 +48,7 @@ SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 char buff_read[1000];
-int indx = 0;
+uint8_t index_file_to_read = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,7 +105,7 @@ int main(void)
   // bsp_display_text(buff_read);
   bsp_sd_card_scan_file();
   bsp_display_list_file(list_file);
-  bsp_sd_card_unmount();
+  // bsp_sd_card_unmount();
 
   /* USER CODE END 2 */
 
@@ -288,27 +288,59 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
   case JOY_A_Pin:
   {
-    bsp_display_text_line("JOY A", 1);
+    // bsp_display_text_line("JOY A", 1);
     break;
   }
   case JOY_B_Pin:
   {
-    bsp_display_text_line("JOY B", 2);
+    // bsp_display_text_line("JOY B", 2);
+    if(index_file_to_read != 2)
+    {
+      index_file_to_read++;
+    }
+    char buffer[100];
+    sprintf(buffer, "%d", index_file_to_read);
+    bsp_display_text_line("INDEX FILE: ", 20);
+    bsp_display_text_line(buffer, 21);
     break;
   }
   case JOY_C_Pin:
   {
-    bsp_display_text_line("JOY C", 3);
+    // bsp_display_text_line("JOY C", 3);
+    if(index_file_to_read != 1)
+    {
+      index_file_to_read--;
+    }
+    char buffer[100];
+    sprintf(buffer, "%d", index_file_to_read);
+    bsp_display_text_line("INDEX FILE: ", 20);
+    bsp_display_text_line(buffer, 21);
     break;
   }
   case JOY_D_Pin:
   {
-    bsp_display_text_line("JOY D", 4);
+    // bsp_display_text_line("JOY D", 4);
     break;
   }
   case JOY_CTR_Pin:
   {
-    bsp_display_text_line("JOY CTR", 5);
+    // bsp_display_text_line("JOY CTR", 5);
+    for(uint8_t i = 0; i < 10; i++)
+    {
+      if(list_file[i].id == 0)
+      {
+        break;
+      }
+
+      if (list_file[i].id == index_file_to_read)
+      {
+        ST7789_Fill_Color(WHITE);
+        char *buf = calloc(1000 * sizeof(char), ' ');
+        bsp_sd_card_read_file_txt(list_file[i].name, buf);
+        bsp_display_text(buf);
+        free(buf);
+      }
+    }
     break;
   }
   default: break;
