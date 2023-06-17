@@ -21,6 +21,7 @@
 void bsp_sd_card_mount(void);
 void bsp_sd_card_unmount(void);
 void bsp_sd_card_read_file_txt(char *name, char* buf); // Read file txt on SD card
+void bsp_sd_card_scan_file(void);
 
 #endif // __BSP_SD_CARD_H
 

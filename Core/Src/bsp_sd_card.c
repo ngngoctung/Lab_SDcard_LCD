@@ -31,4 +31,9 @@ void bsp_sd_card_read_file_txt(char *name, char *buf)
 {
   Read_File(name, buf);
 }
+
+void bsp_sd_card_scan_file(void)
+{
+  Scan_SD("");
+}
 /* End of file -------------------------------------------------------- */

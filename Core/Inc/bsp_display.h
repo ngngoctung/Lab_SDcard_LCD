@@ -18,7 +18,11 @@
 /* Public macros ------------------------------------------------------ */
 /* Public variables --------------------------------------------------- */
 /* Public function prototypes ----------------------------------------- */
-void bsp_display_text(const char *buffer); // Display infor from buffer
+void bsp_display_text(const char *buffer); // Display text infor from buffer
+
+// Display text from buffer in line
+// line (1, 2, 3,...)
+void bsp_display_text_line(const char *buffer, uint8_t line); 
 
 #endif // __BSP_DISPLAY_H
 

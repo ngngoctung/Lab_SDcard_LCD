@@ -37,4 +37,10 @@ void bsp_display_text(const char *buffer)
   }
 }
 
+void bsp_display_text_line(const char *buffer, uint8_t line)
+{
+  uint8_t row = line * 10;
+  ST7789_WriteString(10, row, buffer, Font_7x10, BLACK, WHITE);
+}
+
 /* End of file -------------------------------------------------------- */
