@@ -13,6 +13,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "st7789.h"
+#include "bsp_sd_card.h"
 /* Public defines ----------------------------------------------------- */
 /* Public enumerate/structure ----------------------------------------- */
 /* Public macros ------------------------------------------------------ */
@@ -22,7 +23,8 @@ void bsp_display_text(const char *buffer); // Display text infor from buffer
 
 // Display text from buffer in line
 // line (1, 2, 3,...)
-void bsp_display_text_line(const char *buffer, uint8_t line); 
+void bsp_display_text_line(const char *buffer, uint8_t line);
+void bsp_display_list_file(manage_file_t *list_file);
 
 #endif // __BSP_DISPLAY_H
 

@@ -9,6 +9,7 @@
 
 #include <File_Handling.h>
 #include "bsp_display.h"
+#include "bsp_sd_card.h"
 
 /* =============================>>>>>>>> NO CHANGES AFTER THIS LINE
  * =====================================>>>>>>> */
@@ -57,7 +58,7 @@ FRESULT Scan_SD(char *pat)
   UINT  i;
   char *path = malloc(20 * sizeof(char));
   sprintf(path, "%s", pat);
-  uint8_t index = 1;
+  uint8_t index = 0;
 
   fresult = f_opendir(&dir, path); /* Open the directory */
   if (fresult == FR_OK)
@@ -80,7 +81,8 @@ FRESULT Scan_SD(char *pat)
       }
       else
       { /* It is a file. */
-        bsp_display_text_line(fno.fname, index);
+        list_file[index].id   = index + 1;
+        memcpy(list_file[index].name, fno.fname, sizeof(fno.fname));
         index++;
       }
     }

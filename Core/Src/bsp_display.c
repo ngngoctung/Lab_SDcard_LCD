@@ -43,4 +43,19 @@ void bsp_display_text_line(const char *buffer, uint8_t line)
   ST7789_WriteString(10, row, buffer, Font_7x10, BLACK, WHITE);
 }
 
+void bsp_display_list_file(manage_file_t list_file[])
+{
+  for(uint8_t i = 0; i < 10; i++)
+  {
+    if(list_file[i].id != 0)
+    {
+      bsp_display_text_line(list_file[i].name, list_file[i].id);
+    }
+    else
+    {
+      break;
+    }
+  }
+}
+
 /* End of file -------------------------------------------------------- */

@@ -103,7 +103,8 @@ int main(void)
   bsp_sd_card_mount();
   // bsp_sd_card_read_file_txt("FILE1.TXT", buff_read);
   // bsp_display_text(buff_read);
-  // bsp_sd_card_scan_file();
+  bsp_sd_card_scan_file();
+  bsp_display_list_file(list_file);
   bsp_sd_card_unmount();
 
   /* USER CODE END 2 */
