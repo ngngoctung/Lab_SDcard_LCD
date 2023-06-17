@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "st7789.h"
+#include  "File_Handling.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +47,9 @@ SD_HandleTypeDef hsd;
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
-
+char buffer[100];
+char buff_read[100];
+int indx = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,6 +98,22 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
+  Mount_SD("");
+  // Format_SD();
+  // Create_File("FILE1.TXT");
+  // Create_File("FILE2.TXT");
+  Read_File("FILE2.TXT", buff_read);
+  // Unmount_SD("/");
+
+  // Mount_SD("");
+  sprintf(buffer, "Hello Tung %d\n", indx);
+  // Update_File("FILE1.TXT", buffer);
+  // sprintf(buffer, "world ---> %d\n", indx);
+  Update_File("FILE2.TXT", buffer);
+  // Unmount_SD("");
+
+  indx++;
+  
   HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
   ST7789_Init();
   ST7789_Test();
