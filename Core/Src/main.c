@@ -103,7 +103,7 @@ int main(void)
   bsp_sd_card_mount();
   // bsp_sd_card_read_file_txt("FILE1.TXT", buff_read);
   // bsp_display_text(buff_read);
-  bsp_sd_card_scan_file();
+  // bsp_sd_card_scan_file();
   bsp_sd_card_unmount();
 
   /* USER CODE END 2 */
@@ -242,14 +242,22 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LCD_RST_Pin|LCD_BL_Pin|LCD_CS_Pin|LCD_DC_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : JOY_CTR_Pin JOY_A_Pin JOY_B_Pin JOY_C_Pin
+                           JOY_D_Pin */
+  GPIO_InitStruct.Pin = JOY_CTR_Pin|JOY_A_Pin|JOY_B_Pin|JOY_C_Pin
+                          |JOY_D_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LCD_RST_Pin LCD_BL_Pin LCD_CS_Pin LCD_DC_Pin */
   GPIO_InitStruct.Pin = LCD_RST_Pin|LCD_BL_Pin|LCD_CS_Pin|LCD_DC_Pin;
@@ -258,11 +266,53 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  switch (GPIO_Pin)
+  {
+  case JOY_A_Pin:
+  {
+    bsp_display_text_line("JOY A", 1);
+    break;
+  }
+  case JOY_B_Pin:
+  {
+    bsp_display_text_line("JOY B", 2);
+    break;
+  }
+  case JOY_C_Pin:
+  {
+    bsp_display_text_line("JOY C", 3);
+    break;
+  }
+  case JOY_D_Pin:
+  {
+    bsp_display_text_line("JOY D", 4);
+    break;
+  }
+  case JOY_CTR_Pin:
+  {
+    bsp_display_text_line("JOY CTR", 5);
+    break;
+  }
+  default: break;
+  }
+}
 
 /* USER CODE END 4 */
 
