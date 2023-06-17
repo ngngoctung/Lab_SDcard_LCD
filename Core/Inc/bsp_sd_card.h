@@ -26,6 +26,7 @@ typedef struct
 extern manage_file_t list_file[10];    // Array to store file information
 
 /* Public function prototypes ----------------------------------------- */
+
 /**
  * Mount the SD card.
  */

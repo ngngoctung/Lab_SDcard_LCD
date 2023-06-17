@@ -32,6 +32,7 @@ extern uint8_t index_file_to_read;           // Index of the file to be read
 extern uint8_t num_max_of_file;              // Maximum number of files
 
 /* Public function prototypes ----------------------------------------- */
+
 /**
  * Initialize the system.
  */
@@ -42,7 +43,11 @@ void system_init(void);
  */
 void system_process(void);
 
+/**
+ * Reset system
+ */
 void system_reset(void);
+
 #endif // __SYSTEM_H
 
 /* End of file -------------------------------------------------------- */

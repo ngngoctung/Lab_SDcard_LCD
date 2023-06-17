@@ -2,7 +2,7 @@
  * @file       <system>.c
  * @date       2023-06-17
  *             
- * @brief      <Common>
+ * @brief      <Proccess system>
  *             
  * @note       None
  */
@@ -18,14 +18,47 @@ system_state_t sys_state;
 bool detect_state_change;
 uint8_t index_file_to_read;
 uint8_t num_max_of_file;
+
 /* Private variables -------------------------------------------------- */
 /* Private function prototypes ---------------------------------------- */
+static void sys_process_state_menu(void);
+static void sys_process_state_display_file(void);
+
 /* Function definitions ----------------------------------------------- */
+static void sys_process_state_menu(void)
+{
+  bsp_display_clear();
+  bsp_display_list_file(list_file);
+  bsp_display_title_choose_file();
+  bsp_display_index_choose_file();
+}
+
+static void sys_process_state_display_file(void)
+{
+  for (uint8_t i = 0; i < 10; i++)
+  {
+    // Check if the file ID is 0, indicating the end of the list
+    if (list_file[i].id == 0)
+    {
+      break;
+    }
+
+    if (list_file[i].id == index_file_to_read)
+    {
+      // Display the text from the file
+      bsp_display_clear();
+      char *buf = calloc(1000 * sizeof(char), ' ');
+      bsp_sd_card_read_file_txt(list_file[i].name, buf);
+      bsp_display_text(buf);
+      free(buf);
+    }
+  }
+}
+
 void system_init(void)
 {
   //Init LCD
-  HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
-  ST7789_Init();
+  bsp_display_init();
 
   //Mount sd card and scan to list_file
   bsp_sd_card_mount();
@@ -38,7 +71,7 @@ void system_init(void)
   index_file_to_read = 1;
 }
 
-void system_proccess(void)
+void system_process(void)
 {
     if(detect_state_change)
     {
@@ -48,32 +81,12 @@ void system_proccess(void)
       case STATE_MENU:
       {
         //Display MENU for choose file
-        bsp_display_clear();
-        bsp_display_list_file(list_file);
-        bsp_display_title_choose_file();
-        bsp_display_index_choose_file();
+        sys_process_state_menu();
         break;
       }
       case STATE_DISPLAY_FILE:
       {
-        for (uint8_t i = 0; i < 10; i++)
-        {
-          // Check if the file ID is 0, indicating the end of the list
-          if (list_file[i].id == 0)
-          {
-            break;
-          }
-
-          if (list_file[i].id == index_file_to_read)
-          {
-            // Display the text from the file
-            bsp_display_clear();
-            char *buf = calloc(1000 * sizeof(char), ' ');
-            bsp_sd_card_read_file_txt(list_file[i].name, buf);
-            bsp_display_text(buf);
-            free(buf);
-          }
-        }
+       sys_process_state_display_file();
         break;
       }
       default: break;

@@ -96,18 +96,16 @@ int main(void)
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
   system_init();
-  // bsp_sd_card_unmount();
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    system_process();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    system_proccess();
   }
   /* USER CODE END 3 */
 }

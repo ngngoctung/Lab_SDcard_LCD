@@ -19,6 +19,12 @@
 /* Public macros ------------------------------------------------------ */
 /* Public variables --------------------------------------------------- */
 /* Public function prototypes ----------------------------------------- */
+
+/**
+ * @brief Initializes the display module.
+ */
+void bsp_display_init(void);
+
 /**
  * Display text information from buffer.
  * 

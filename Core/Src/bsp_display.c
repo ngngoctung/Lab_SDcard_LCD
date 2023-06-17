@@ -18,6 +18,13 @@
 /* Private variables -------------------------------------------------- */
 /* Private function prototypes ---------------------------------------- */
 /* Function definitions ----------------------------------------------- */
+void bsp_display_init(void)
+{
+  //Init LCD
+  HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
+  ST7789_Init();
+}
+
 void bsp_display_text(const char *buffer)
 {
   uint16_t x = 10;
