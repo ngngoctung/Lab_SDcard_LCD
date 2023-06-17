@@ -38,32 +38,49 @@ void bsp_display_text(const char *buffer)
   }
 }
 
-void bsp_display_text_line(const char *buffer, uint8_t line)
+void bsp_display_text_line(const char *buffer, uint8_t line, uint8_t column)
 {
   uint8_t row = line * 10;
-  ST7789_WriteString(10, row, buffer, Font_7x10, BLACK, WHITE);
+  ST7789_WriteString(column, row, buffer, Font_7x10, BLACK, WHITE);
 }
 
 void bsp_display_list_file(manage_file_t list_file[])
 {
-  for(uint8_t i = 0; i < 10; i++)
+  bsp_display_text_line("### LIST OF FILE ON SD CARD ###", 1, 10);
+
+  for (uint8_t i = 0; i < 10; i++)
   {
-    if(list_file[i].id != 0)
+    if (list_file[i].id != 0)
     {
-      bsp_display_text_line(list_file[i].name, list_file[i].id);
+      char buffer[100];
+      sprintf(buffer, "%d.", list_file[i].id);
+      bsp_display_text_line(buffer, list_file[i].id + 2, 10);
+      bsp_display_text_line(list_file[i].name, list_file[i].id + 2, 31);
     }
     else
     {
       break;
     }
   }
+
+  bsp_display_text_line("###### END OF LIST FILE #######", 14, 10);
 }
 
 void bsp_display_index_choose_file(void)
 {
   char buffer[100];
-  sprintf(buffer, "%d", index_file_to_read);
-  bsp_display_text_line(buffer, 21);
+  sprintf(buffer, "%d ", index_file_to_read);
+  ST7789_WriteString(105, 230, buffer, Font_11x18, BLUE, WHITE);
+}
+
+void bsp_display_clear(void)
+{
+  ST7789_Fill_Color(WHITE);
+}
+
+void bsp_display_title_choose_file(void)
+{
+   ST7789_WriteString(40, 200, "CHOOSE FILE:", Font_11x18, BLACK, WHITE);
 }
 
 /* End of file -------------------------------------------------------- */
