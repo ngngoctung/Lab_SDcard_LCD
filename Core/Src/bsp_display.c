@@ -24,7 +24,7 @@ void display_text(const char *buffer)
 
   for (int i = 0; buffer[i] != '\0'; i++)
   {
-    if (buffer[i] == '\n')
+    if (buffer[i] == '\n' || buffer[i] == '\r')
     {
       y += 10;  // New lines
       x = 10;   // Reset to head of lines
