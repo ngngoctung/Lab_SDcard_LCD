@@ -1,35 +1,39 @@
 /**
- * @file       <bsp_sd_card>.h
+ * @file       <common>.h
  * @date       2023-06-17
  *             
- * @brief      <Handle file on SD card>
+ * @brief      <Display information on LCD>
  *             
  * @note       None
  */
 
 /* Define to prevent recursive inclusion ------------------------------ */
-#ifndef __BSP_SD_CARD_H
-#define __BSP_SD_CARD_H
+#ifndef __COMMON_H
+#define __COMMON_H
 
 /* Includes ----------------------------------------------------------- */
-#include "File_Handling.h"
+#include "bsp_display.h"
+#include "bsp_sd_card.h"
+#include "stdbool.h"
 /* Public defines ----------------------------------------------------- */
 /* Public enumerate/structure ----------------------------------------- */
-typedef struct
+typedef enum 
 {
-  uint8_t id;   /**< Index of file */
-  char name[30]; /**< Name file */
+  STATE_MENU, 
+  STATE_DISPLAY_FILE, 
+  STATE_MAX
 }
-manage_file_t;
+system_state_t;
 /* Public macros ------------------------------------------------------ */
 /* Public variables --------------------------------------------------- */
-extern manage_file_t list_file[10];
+extern system_state_t sys_state;
+extern bool detect_state_change;
+extern bool is_list_file_display;
+extern uint8_t index_file_to_read;
+extern uint8_t num_max_of_file;
 /* Public function prototypes ----------------------------------------- */
-void bsp_sd_card_mount(void);
-void bsp_sd_card_unmount(void);
-void bsp_sd_card_read_file_txt(char *name, char* buf); // Read file txt on SD card
-void bsp_sd_card_scan_file(void);
-
-#endif // __BSP_SD_CARD_H
+void system_init(void);
+void system_proccess(void);
+#endif // __COMMON_H
 
 /* End of file -------------------------------------------------------- */
