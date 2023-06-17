@@ -9,7 +9,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "bsp_display.h"
-#include "common.h"
+#include "system.h"
 
 /* Private defines ---------------------------------------------------- */
 /* Private enumerate/structure ---------------------------------------- */
@@ -52,6 +52,7 @@ void bsp_display_list_file(manage_file_t list_file[])
   {
     if (list_file[i].id != 0)
     {
+      // Display index and name of files in list_file
       char buffer[100];
       sprintf(buffer, "%d.", list_file[i].id);
       bsp_display_text_line(buffer, list_file[i].id + 2, 10);
