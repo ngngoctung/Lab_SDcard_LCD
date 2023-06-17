@@ -63,7 +63,18 @@ static void MX_SDIO_SD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void removeNewlines(char arr[], int n)
+{
+  int j = 0;
 
+  for (int i = 0; i < n; i++)
+  {
+    if (arr[i] == '\n')
+    {
+      arr[i] = ' ';
+    }
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -98,25 +109,29 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
+  HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
+  ST7789_Init();
   Mount_SD("");
   // Format_SD();
   // Create_File("FILE1.TXT");
   // Create_File("FILE2.TXT");
   Read_File("FILE2.TXT", buff_read);
+  removeNewlines(buff_read, 100);
   // Unmount_SD("/");
 
   // Mount_SD("");
-  sprintf(buffer, "Hello Tung %d\n", indx);
+  // sprintf(buffer, "Hello Tung %d\n", indx);
   // Update_File("FILE1.TXT", buffer);
   // sprintf(buffer, "world ---> %d\n", indx);
-  Update_File("FILE2.TXT", buffer);
+  // Update_File("FILE2.TXT", buffer);
   // Unmount_SD("");
 
-  indx++;
+  // indx++;
   
-  HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
-  ST7789_Init();
-  ST7789_Test();
+ 
+  ST7789_WriteString(10, 10, buff_read, Font_7x10, BLACK, WHITE);
+  ST7789_WriteString(10, 20, buff_read, Font_7x10, BLACK, WHITE);
+  // ST7789_Test();
 //  ST7789_DrawPixel(1, 1, RED);
 
   /* USER CODE END 2 */
