@@ -18,7 +18,7 @@
 /* Public macros ------------------------------------------------------ */
 /* Public variables --------------------------------------------------- */
 /* Public function prototypes ----------------------------------------- */
-void display_text(const char *buffer); // Display infor from buffer
+void bsp_display_text(const char *buffer); // Display infor from buffer
 
 #endif // __BSP_DISPLAY_H
 

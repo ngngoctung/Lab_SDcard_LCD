@@ -69,10 +69,6 @@ FRESULT Scan_SD(char *pat)
       {
         if (!(strcmp("SYSTEM~1", fno.fname)))
           continue;
-        char *buf = malloc(30 * sizeof(char));
-        sprintf(buf, "Dir: %s\r\n", fno.fname);
-        Send_Uart(buf);
-        free(buf);
         i = strlen(path);
         sprintf(&path[i], "/%s", fno.fname);
         fresult = Scan_SD(path); /* Enter the directory */
@@ -82,10 +78,7 @@ FRESULT Scan_SD(char *pat)
       }
       else
       { /* It is a file. */
-        char *buf = malloc(30 * sizeof(char));
-        sprintf(buf, "File: %s/%s\n", path, fno.fname);
-        Send_Uart(buf);
-        free(buf);
+        // TO DO
       }
     }
     f_closedir(&dir);

@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "File_Handling.h"
+#include "bsp_sd_card.h"
 #include "bsp_display.h"
 /* USER CODE END Includes */
 
@@ -47,7 +47,6 @@ SD_HandleTypeDef hsd;
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
-char buffer[1000];
 char buff_read[1000];
 int indx = 0;
 /* USER CODE END PV */
@@ -100,29 +99,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
   ST7789_Init();
-  Mount_SD("");
-  // Format_SD();
-  // Create_File("FILE1.TXT");
-  // Create_File("FILE2.TXT");
-  Read_File("FILE2.TXT", buff_read);
-  // removeNewlines(buff_read, 100);
-  // Unmount_SD("/");
 
-  // Mount_SD("");
-  // sprintf(buffer, "Hello Tung %d\n", indx);
-  // Update_File("FILE1.TXT", buffer);
-  // sprintf(buffer, "world ---> %d\n", indx);
-  // Update_File("FILE2.TXT", buffer);
-  // Unmount_SD("");
-
-  // indx++;
-  
- 
-  // ST7789_WriteString(10, 10, buff_read, Font_7x10, BLACK, WHITE);
-  // ST7789_WriteString(10, 20, buff_read, Font_7x10, BLACK, WHITE);
-  display_text(buff_read);
-  // ST7789_Test();
-//  ST7789_DrawPixel(1, 1, RED);
+  bsp_sd_card_mount();
+  bsp_sd_card_read_file_txt("FILE1.TXT", buff_read);
+  bsp_display_text(buff_read);
+  bsp_sd_card_unmount();
 
   /* USER CODE END 2 */
 

@@ -17,7 +17,7 @@
 /* Private variables -------------------------------------------------- */
 /* Private function prototypes ---------------------------------------- */
 /* Function definitions ----------------------------------------------- */
-void display_text(const char *buffer)
+void bsp_display_text(const char *buffer)
 {
   uint16_t x = 10;
   uint16_t y = 10;
