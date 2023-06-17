@@ -23,9 +23,11 @@ void bsp_display_text(const char *buffer); // Display text infor from buffer
 
 // Display text from buffer in line
 // line (1, 2, 3,...)
-void bsp_display_text_line(const char *buffer, uint8_t line);
+void bsp_display_text_line(const char *buffer, uint8_t line, uint8_t column);
 void bsp_display_list_file(manage_file_t *list_file);
 void bsp_display_index_choose_file(void);
+void bsp_display_clear(void);
+void bsp_display_title_choose_file(void);
 
 #endif // __BSP_DISPLAY_H
 

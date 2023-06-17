@@ -18,7 +18,7 @@
 typedef struct
 {
   uint8_t id;   /**< Index of file */
-  char name[30]; /**< Name file */
+  char name[100]; /**< Name file */
 }
 manage_file_t;
 /* Public macros ------------------------------------------------------ */

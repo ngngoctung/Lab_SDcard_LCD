@@ -45,9 +45,9 @@ void system_proccess(void)
       {
       case STATE_MENU:
       {
-        ST7789_Fill_Color(WHITE);
+        bsp_display_clear();
         bsp_display_list_file(list_file);
-        bsp_display_text_line("INDEX FILE: ", 20);
+        bsp_display_title_choose_file();
         bsp_display_index_choose_file();
         break;
       }
@@ -61,7 +61,7 @@ void system_proccess(void)
           }
           if (list_file[i].id == index_file_to_read)
           {
-            ST7789_Fill_Color(WHITE);
+            bsp_display_clear();
             char *buf = calloc(1000 * sizeof(char), ' ');
             bsp_sd_card_read_file_txt(list_file[i].name, buf);
             bsp_display_text(buf);

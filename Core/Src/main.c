@@ -280,9 +280,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
   case JOY_A_Pin:
   {
-    detect_state_change = true;
     if(sys_state == STATE_DISPLAY_FILE)
     {
+      detect_state_change = true;
       sys_state = STATE_MENU;
     }
     
