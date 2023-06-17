@@ -69,9 +69,10 @@ void bsp_display_list_file(manage_file_t list_file[])
 
 void bsp_display_index_choose_file(void)
 {
-  char buffer[100];
-  sprintf(buffer, "%d ", index_file_to_read);
-  ST7789_WriteString(105, 230, buffer, Font_11x18, BLUE, WHITE);
+  // char buffer[100];
+  // sprintf(buffer, "%d ", index_file_to_read);
+  ST7789_WriteString(60, 230, "                                    ", Font_11x18, BLUE, WHITE);
+  ST7789_WriteString(60, 230, list_file[index_file_to_read - 1].name, Font_11x18, BLUE, WHITE);
 }
 
 void bsp_display_clear(void)
