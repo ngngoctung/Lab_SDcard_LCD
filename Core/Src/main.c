@@ -22,8 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_sd_card.h"
-#include "bsp_display.h"
+#include "common.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,8 +46,7 @@ SD_HandleTypeDef hsd;
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
-char buff_read[1000];
-uint8_t index_file_to_read = 1;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,14 +95,7 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(BLK_PORT, BLK_PIN, GPIO_PIN_SET);
-  ST7789_Init();
-
-  bsp_sd_card_mount();
-  // bsp_sd_card_read_file_txt("FILE1.TXT", buff_read);
-  // bsp_display_text(buff_read);
-  bsp_sd_card_scan_file();
-  bsp_display_list_file(list_file);
+  system_init();
   // bsp_sd_card_unmount();
 
   /* USER CODE END 2 */
@@ -116,6 +107,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    system_proccess();
   }
   /* USER CODE END 3 */
 }
@@ -289,6 +281,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   case JOY_A_Pin:
   {
     // bsp_display_text_line("JOY A", 1);
+    detect_state_change = true;
+    if(sys_state == STATE_DISPLAY_FILE)
+    {
+      sys_state = STATE_MENU;
+    }
+    
     break;
   }
   case JOY_B_Pin:
@@ -325,22 +323,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   case JOY_CTR_Pin:
   {
     // bsp_display_text_line("JOY CTR", 5);
-    for(uint8_t i = 0; i < 10; i++)
-    {
-      if(list_file[i].id == 0)
-      {
-        break;
-      }
-
-      if (list_file[i].id == index_file_to_read)
-      {
-        ST7789_Fill_Color(WHITE);
-        char *buf = calloc(1000 * sizeof(char), ' ');
-        bsp_sd_card_read_file_txt(list_file[i].name, buf);
-        bsp_display_text(buf);
-        free(buf);
-      }
-    }
+    detect_state_change = true;
+    sys_state = STATE_DISPLAY_FILE;
     break;
   }
   default: break;
